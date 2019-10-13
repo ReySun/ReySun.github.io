@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://reysun.github.io/"/>
-  <updated>2019-10-13T08:26:58.184Z</updated>
+  <updated>2019-10-13T09:37:34.483Z</updated>
   <id>https://reysun.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>dynamic-import antd after create-react-app run npm run eject</title>
+    <link href="https://reysun.github.io/2019/10/12/react/dynamic-import%20antd%20after%20create-react-app%20run%20npm%20run%20eject/"/>
+    <id>https://reysun.github.io/2019/10/12/react/dynamic-import antd after create-react-app run npm run eject/</id>
+    <published>2019-10-12T09:47:19.000Z</published>
+    <updated>2019-10-13T09:37:34.483Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>探讨的问题<br><a href="https://ant.design/docs/react/use-with-create-react-app-cn" target="_blank" rel="noopener">https://ant.design/docs/react/use-with-create-react-app-cn</a><br>你也可以使用 create-react-app 提供的 yarn run eject 命令将所有内建的配置暴露出来。</p></blockquote><h4 id="eject之后未按需加载组件样式"><a href="#eject之后未按需加载组件样式" class="headerlink" title="eject之后未按需加载组件样式"></a>eject之后未按需加载组件样式</h4><p>其实主要就是css的全局引入导致的，并没有按需加载组件样式</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Button <span class="keyword">from</span> <span class="string">'antd/es/button'</span>;</span><br></pre></td></tr></table></figure><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">import</span> <span class="string">'~antd/dist/antd.css'</span>;</span><br></pre></td></tr></table></figure><p>仅引入<code>&lt;Button /&gt;</code>组件，eject之后的大小截图<br><img src="/images/articles/eject-not-dynamic-import.jpg" alt="eject-not-dynamic-import.jpg"></p><h4 id="利用babel-plugin-import按需加载组件样式"><a href="#利用babel-plugin-import按需加载组件样式" class="headerlink" title="利用babel-plugin-import按需加载组件样式"></a>利用<code>babel-plugin-import</code>按需加载组件样式</h4><p>安装babel插件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i babel-plugin-import --save-dev</span><br></pre></td></tr></table></figure><p>修改<code>config/webpack.config.js</code>，找到文件中<code>babel-loader</code>配置的地方，将插件加入进去</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">loader: require.resolve('babel-loader'),</span><br><span class="line">    ...</span><br><span class="line">    options: &#123;</span><br><span class="line">        ...</span><br><span class="line">        plugins: [</span><br><span class="line">            [<span class="string">"import"</span>, &#123; </span><br><span class="line">                <span class="attr">"libraryName"</span>: <span class="string">"antd"</span>, </span><br><span class="line">                <span class="attr">"libraryDirectory"</span>: <span class="string">"es"</span>, </span><br><span class="line">                <span class="attr">"style"</span>: <span class="string">"css"</span> </span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">        ...</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">...</span><br></pre></td></tr></table></figure><p>只引Button组件，不引css</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">'antd'</span>;</span><br></pre></td></tr></table></figure><p>仅引入<code>&lt;Button /&gt;</code>组件，eject之后的大小截图<br><img src="/images/articles/eject-dynamic-import.jpg" alt="eject-dynamic-import.jpg"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;探讨的问题&lt;br&gt;&lt;a href=&quot;https://ant.design/docs/react/use-with-create-react-app-cn&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://ant.des
+      
+    
+    </summary>
+    
+    
+      <category term="React" scheme="https://reysun.github.io/categories/React/"/>
+    
+    
+      <category term="react" scheme="https://reysun.github.io/tags/react/"/>
+    
+  </entry>
   
   <entry>
     <title>第二章 正则表达式位置匹配攻略</title>
@@ -84,10 +111,10 @@
   
   <entry>
     <title>react-native 环境问题汇总</title>
-    <link href="https://reysun.github.io/2019/09/15/RN%E7%8E%AF%E5%A2%83%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/"/>
-    <id>https://reysun.github.io/2019/09/15/RN环境问题汇总/</id>
+    <link href="https://reysun.github.io/2019/09/15/react/RN%E7%8E%AF%E5%A2%83%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/"/>
+    <id>https://reysun.github.io/2019/09/15/react/RN环境问题汇总/</id>
     <published>2019-09-15T13:34:16.000Z</published>
-    <updated>2019-10-13T08:12:02.614Z</updated>
+    <updated>2019-10-13T08:42:07.876Z</updated>
     
     <content type="html"><![CDATA[<a id="more"></a><h5 id="执行react-native-init-PROJECT-NAME之后，卡info-Installing-required-CocoaPods-dependencies不动或者很缓慢"><a href="#执行react-native-init-PROJECT-NAME之后，卡info-Installing-required-CocoaPods-dependencies不动或者很缓慢" class="headerlink" title="执行react-native init PROJECT_NAME之后，卡info Installing required CocoaPods dependencies不动或者很缓慢"></a>执行<code>react-native init PROJECT_NAME</code>之后，卡<code>info Installing required CocoaPods dependencies</code>不动或者很缓慢</h5><ol><li><p>手动CTRL+C打断进程，卸载cocoapods，重新设置gem源和安装删除cocoapods</p><ol><li><code>sudo gem uninstall cocoapods cocoapods-core</code></li><li><code>gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/</code></li><li><code>gem sources -l</code></li><li><code>sudo gem install cocoapods</code></li><li><code>pod setup</code></li></ol></li><li><p>继上面的步骤，进入到项目根目录，手动安装pod，安装过一次之后，后面安装就会很快</p><ol><li><code>cd ios</code></li><li><code>pod install --verbose --no-repo-update</code></li></ol></li></ol><blockquote><p>参考链接<br><a href="https://www.cnblogs.com/stevexu/archive/2019/04/21/10745769.html" target="_blank" rel="noopener">https://www.cnblogs.com/stevexu/archive/2019/04/21/10745769.html</a><br><a href="https://github.com/facebook/react-native/issues/20774" target="_blank" rel="noopener">https://github.com/facebook/react-native/issues/20774</a><br><a href="https://blog.csdn.net/wzzvictory/article/details/18737437" target="_blank" rel="noopener">https://blog.csdn.net/wzzvictory/article/details/18737437</a></p></blockquote><h5 id="执行cd-RN-amp-amp-react-native-run-ios之后，报错error-Could-not-find-quot-iPhone-X-quot-xcode-simulator"><a href="#执行cd-RN-amp-amp-react-native-run-ios之后，报错error-Could-not-find-quot-iPhone-X-quot-xcode-simulator" class="headerlink" title="执行cd RN &amp;&amp; react-native run-ios之后，报错error Could not find &quot;iPhone X&quot; xcode simulator."></a>执行<code>cd RN &amp;&amp; react-native run-ios</code>之后，报错<code>error Could not find &quot;iPhone X&quot; xcode simulator.</code></h5><ol><li>切换到xcode simulator，查看可用simulator设备<br><code>xcrun simctl list devices</code></li><li>或者模拟器查看<br><img src="/images/articles/xcode-simulator.jpg" alt="xcode-simulator.jpg"><br><img src="/images/articles/simulator-device.jpg" alt="simulator-device.jpg"></li><li>指定已存在，如上面的iPhone 11<br><code>react-native run-ios --simulator=&quot;iPhone 11&quot;</code></li></ol><h5 id="创建react-native项目时，用typescript替换js，注意react-native-0-61-0-or-higher与react-native-0-60-x的差异"><a href="#创建react-native项目时，用typescript替换js，注意react-native-0-61-0-or-higher与react-native-0-60-x的差异" class="headerlink" title="创建react-native项目时，用typescript替换js，注意react-native@0.61.0 or higher与react-native@0.60.x的差异"></a>创建react-native项目时，用typescript替换js，注意<em><a href="mailto:react-native@0.61.0" target="_blank" rel="noopener">react-native@0.61.0</a> or higher</em>与<em><a href="mailto:react-native@0.60.x" target="_blank" rel="noopener">react-native@0.60.x</a></em>的差异</h5><p><code>react-native init PROJECT_NAME --template react-native-template-typescript</code></p><blockquote><p>参考链接<br><code>https://github.com/facebook/react-native/issues/26727</code><br><code>https://github.com/react-native-community/react-native-template-typescript/blob/master/README.md#note-on-the-legacy-clip</code></p></blockquote><h5 id="在xcode11上启动xcode10项目时报错，Unknown-argument-type-39-attribute-39-in-method-RCTAppState-getCurrentAppState-error-Extend-RCTConvert-to-support-this-type"><a href="#在xcode11上启动xcode10项目时报错，Unknown-argument-type-39-attribute-39-in-method-RCTAppState-getCurrentAppState-error-Extend-RCTConvert-to-support-this-type" class="headerlink" title="在xcode11上启动xcode10项目时报错，Unknown argument type &#39;__attribute__&#39; in method -[RCTAppState getCurrentAppState:error:]. Extend RCTConvert to support this type."></a>在xcode11上启动xcode10项目时报错，<code>Unknown argument type &#39;__attribute__&#39; in method -[RCTAppState getCurrentAppState:error:]. Extend RCTConvert to support this type.</code></h5><blockquote><p>参考链接<br><a href="https://github.com/facebook/react-native/issues/25138" target="_blank" rel="noopener">https://github.com/facebook/react-native/issues/25138</a><br><a href="https://github.com/facebook/react-native/pull/25146" target="_blank" rel="noopener">https://github.com/facebook/react-native/pull/25146</a></p></blockquote>]]></content>
     
