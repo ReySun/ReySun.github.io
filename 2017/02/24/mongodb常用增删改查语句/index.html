@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>MongoDB常用增删改查语句 | ReySun的博客</title>
+  <meta name="description" content="数据库database创建及查看库 有则使用这个数据库，没有就创建 1use DATABASE_NAME  查看当前选择的数据库，默认是test 1db  查看数据库，默认有admin、local和”test”，如果数据库生成但是没有集合（下面会讲）所以此时只有逻辑数据库产生并没有真正意义上的物理数据，这样看不到查询结果 1show dbs    删除库 删除选定的数据库，如果还没有选择任何数据">
+<meta name="keywords" content="mongodb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB常用增删改查语句">
+<meta property="og:url" content="https://reysun.github.io/2017/02/24/mongodb常用增删改查语句/index.html">
+<meta property="og:site_name" content="ReySun">
+<meta property="og:description" content="数据库database创建及查看库 有则使用这个数据库，没有就创建 1use DATABASE_NAME  查看当前选择的数据库，默认是test 1db  查看数据库，默认有admin、local和”test”，如果数据库生成但是没有集合（下面会讲）所以此时只有逻辑数据库产生并没有真正意义上的物理数据，这样看不到查询结果 1show dbs    删除库 删除选定的数据库，如果还没有选择任何数据">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-12T12:36:50.889Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB常用增删改查语句">
+<meta name="twitter:description" content="数据库database创建及查看库 有则使用这个数据库，没有就创建 1use DATABASE_NAME  查看当前选择的数据库，默认是test 1db  查看数据库，默认有admin、local和”test”，如果数据库生成但是没有集合（下面会讲）所以此时只有逻辑数据库产生并没有真正意义上的物理数据，这样看不到查询结果 1show dbs    删除库 删除选定的数据库，如果还没有选择任何数据">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://reysun.github.io/2017/02/24/mongodb常用增删改查语句/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="ReySun" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitment@0.0.3/style/default.min.css">
+  
+  
+  
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/ReySun" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpeg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">ReySun</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> ChengDu, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ReySun" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Angular/">Angular</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mongo/">Mongo</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API重构/">API重构</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angular-cli/">angular-cli</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串正则/">字符串正则</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/浏览器兼容性处理/">浏览器兼容性处理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/边框三角形/">边框三角形</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/API重构/" style="font-size: 13px;">API重构</a> <a href="/tags/angular-cli/" style="font-size: 13px;">angular-cli</a> <a href="/tags/mongodb/" style="font-size: 14px;">mongodb</a> <a href="/tags/字符串正则/" style="font-size: 13px;">字符串正则</a> <a href="/tags/正则表达式/" style="font-size: 13px;">正则表达式</a> <a href="/tags/浏览器兼容性处理/" style="font-size: 13px;">浏览器兼容性处理</a> <a href="/tags/边框三角形/" style="font-size: 13px;">边框三角形</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Angular/">Angular</a>
+              </p>
+              <p class="item-title">
+                <a href="/2017/08/29/angular-cli怎么开启本地服务？/" class="title">angular-cli怎么开启本地服务？</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2017-08-29T13:45:01.000Z" itemprop="datePublished">2017-08-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/JavaScript/">JavaScript</a>
+              </p>
+              <p class="item-title">
+                <a href="/2017/04/12/javascript之正则匹配字符串关键词与位置/" class="title">JavaScript之正则匹配字符串的关键词与位置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2017-04-11T16:16:23.000Z" itemprop="datePublished">2017-04-12</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/JavaScript/">JavaScript</a>
+              </p>
+              <p class="item-title">
+                <a href="/2017/04/11/javascript之正则表达式/" class="title">JavaScript之正则表达式</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2017-04-11T13:38:10.000Z" itemprop="datePublished">2017-04-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/CSS/">CSS</a>
+              </p>
+              <p class="item-title">
+                <a href="/2017/04/06/CSS3渐进增强解决方案/" class="title">CSS3渐进增强解决方案</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2017-04-06T13:03:10.000Z" itemprop="datePublished">2017-04-06</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Mongo/">Mongo</a>
+              </p>
+              <p class="item-title">
+                <a href="/2017/02/24/mongodb常用增删改查语句/" class="title">MongoDB常用增删改查语句</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2017-02-24T10:59:01.000Z" itemprop="datePublished">2017-02-24</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库database"><span class="toc-number">1.</span> <span class="toc-text">数据库database</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建及查看库"><span class="toc-number">1.1.</span> <span class="toc-text">创建及查看库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除库"><span class="toc-number">1.2.</span> <span class="toc-text">删除库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集合collection-相当于SQL数据库中的表table"><span class="toc-number">2.</span> <span class="toc-text">集合collection(相当于SQL数据库中的表table)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建及查看集合"><span class="toc-number">2.1.</span> <span class="toc-text">创建及查看集合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除集合"><span class="toc-number">2.2.</span> <span class="toc-text">删除集合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文档document-相当于SQL数据库中的列column"><span class="toc-number">3.</span> <span class="toc-text">文档document(相当于SQL数据库中的列column)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#增-insert"><span class="toc-number">3.1.</span> <span class="toc-text">增(insert)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删-remove"><span class="toc-number">3.2.</span> <span class="toc-text">删(remove)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#改-update"><span class="toc-number">3.3.</span> <span class="toc-text">改(update)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查-find"><span class="toc-number">3.4.</span> <span class="toc-text">查(find)</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-mongodb常用增删改查语句" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MongoDB常用增删改查语句
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2017/02/24/mongodb常用增删改查语句/" class="article-date">
+	  <time datetime="2017-02-24T10:59:01.000Z" itemprop="datePublished">2017-02-24</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Mongo/">Mongo</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/mongodb/">mongodb</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2017/02/24/mongodb常用增删改查语句/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="数据库database"><a href="#数据库database" class="headerlink" title="数据库database"></a>数据库database</h2><h3 id="创建及查看库"><a href="#创建及查看库" class="headerlink" title="创建及查看库"></a>创建及查看库</h3><ol>
+<li><p>有则使用这个数据库，没有就创建</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use DATABASE_NAME</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看当前选择的数据库，默认是test</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看数据库，默认有admin、local和”test”，如果数据库生成但是没有集合（下面会讲）所以此时只有逻辑数据库产生并没有真正意义上的物理数据，这样看不到查询结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show dbs</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="删除库"><a href="#删除库" class="headerlink" title="删除库"></a>删除库</h3><ol>
+<li>删除选定的数据库，如果还没有选择任何数据库，然后它会删除默认的 ‘ test’ 数据库，执行成功返回{ “dropped” : DATABASE_NAME, “ok” : 1 }<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.dropDatabase()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="集合collection-相当于SQL数据库中的表table"><a href="#集合collection-相当于SQL数据库中的表table" class="headerlink" title="集合collection(相当于SQL数据库中的表table)"></a>集合collection(相当于SQL数据库中的表table)</h2><h3 id="创建及查看集合"><a href="#创建及查看集合" class="headerlink" title="创建及查看集合"></a>创建及查看集合</h3><ol>
+<li><p>查看集合</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show collections</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以下注释只为方便阅读，请勿在命令行使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(name, &#123; //集合的名字</span><br><span class="line">  capped: &lt;Boolean&gt;,        //是否启用集合限制，如果开启需要制定一个限制条件，默认为不启用，这个参数没有实际意义</span><br><span class="line">  autoIndexId: &lt;Boolean&gt;,   //是否使用_id作为索引，默认为使用(<span class="literal">true</span>或<span class="literal">false</span>)</span><br><span class="line">  size: &lt;number&gt;,           //限制集合使用空间的大小，默认为没有限制,size的优先级比max要高</span><br><span class="line">  max &lt;number&gt;&#125;             //集合中最大条数限制，默认为没有限制</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>特殊情况，若没有newdbc集合，会自动创建集合newdbc并插入数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.newdbc.insert(&#123;<span class="string">"name"</span> : <span class="string">"yiibai"</span>&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>常用方法介绍</p>
+</li>
+</ol>
+<ul>
+<li><p><strong>没有任何的大小，数量限制，使用_id作为默认索引</strong>db.createCollection(name)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(<span class="string">"log"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>限制它的空间大小为1M，如果超过1M的大小，则会删除最早的记录</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(<span class="string">"log"</span>,&#123;size:1024&#125;)</span><br><span class="line">db.createCollection(<span class="string">"log"</span>，&#123;capped:<span class="literal">true</span>,size:1024&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>最大条数为1024条，超过1024再插入数据的话会删除最早的一条记录。这个不能使用capped:true，否则会报错</strong>db.createCollection(name)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(<span class="string">"log"</span>,&#123;max:1024&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>限制集合最大使用空间为1M，最大条数为1024条</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(<span class="string">"log"</span>,&#123;size:1024,max:1024&#125;)</span><br><span class="line">db.createCollection(<span class="string">"log"</span>,&#123;capped:<span class="literal">true</span>,size:1024,max:1024&#125;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="删除集合"><a href="#删除集合" class="headerlink" title="删除集合"></a>删除集合</h3><ol>
+<li>执行成功返回true，否则将返回 false<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.COLLECTION_NAME.drop()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="文档document-相当于SQL数据库中的列column"><a href="#文档document-相当于SQL数据库中的列column" class="headerlink" title="文档document(相当于SQL数据库中的列column)"></a>文档document(相当于SQL数据库中的列column)</h2><h3 id="增-insert"><a href="#增-insert" class="headerlink" title="增(insert)"></a>增(insert)</h3><ol>
+<li><p>单条数据插入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.user.insert(&#123;<span class="string">"name"</span>:<span class="string">"jack"</span>,<span class="string">"age"</span>:20&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>批量数据插入采用命令行for循环</p>
+</li>
+</ol>
+<h3 id="删-remove"><a href="#删-remove" class="headerlink" title="删(remove)"></a>删(remove)</h3><ol>
+<li>不带参数会删除全部数据，且不可恢复，切记！<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.user.remove(&#123;<span class="string">"name"</span>:<span class="string">"joe"</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="改-update"><a href="#改-update" class="headerlink" title="改(update)"></a>改(update)</h3><ol>
+<li><p>整体更新</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var model = db.user.findOne(&#123;<span class="string">"name"</span>:<span class="string">"jack"</span>&#125;)</span><br><span class="line">model.age=30</span><br><span class="line">db.user.update(&#123;<span class="string">"name"</span>:<span class="string">"jack"</span>&#125;,model)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>局部更新</p>
+</li>
+</ol>
+<ul>
+<li><p>$inc修改器——比如我们做一个在线用户状态记录，每次修改会在原有的基础上自增$inc指定的值，如果“文档”中没有此key，则会创建key</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.user.update(&#123;<span class="string">"name"</span>:<span class="string">"jack"</span>&#125;,&#123;<span class="variable">$inc</span>:&#123;<span class="string">"age"</span>:30&#125;&#125;) //年龄增加30</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>$set修改器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.user.update(&#123;<span class="string">"name"</span>:<span class="string">"jack"</span>&#125;,&#123;<span class="variable">$set</span>:&#123;<span class="string">"age"</span>:10&#125;&#125;) //年龄变为10</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol start="3">
+<li>upsert操作——如果没有查到，就在数据库里面新增一条，使用起来很简单，将update的第三个参数设为true即可。</li>
+<li>批量更新——在mongodb中如果匹配多条，默认的情况下只更新第一条，那么如果我们有需求必须批量更新，那么在mongodb中实现也是很简单的，在update的第四个参数中设为true即可</li>
+</ol>
+<h3 id="查-find"><a href="#查-find" class="headerlink" title="查(find)"></a>查(find)</h3><ol>
+<li><p>查找key=value的数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"key"</span> : value &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>key &gt; value</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"key"</span> : &#123; <span class="variable">$gt</span>: value &#125; &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>key &lt; value</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"key"</span> : &#123; <span class="variable">$lt</span>: value &#125; &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>key &gt;= value</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"key"</span> : &#123; <span class="variable">$gte</span>: value &#125; &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>key &lt;= value</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"key"</span> : &#123; <span class="variable">$lte</span>: value &#125; &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>value1 &lt; key &lt;value2</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"key"</span> : &#123; <span class="variable">$gt</span>: value1 , <span class="variable">$lt</span>: value2 &#125; &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>key &lt;&gt; value</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"key"</span> : &#123; <span class="variable">$ne</span>: value &#125; &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>取模运算，条件相当于key % 10 == 1 即key除以10余数为1的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"key"</span> : &#123; <span class="variable">$mod</span> : [ 10 , 1 ] &#125; &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不属于，条件相当于key的值不属于[ 1, 2, 3 ]中任何一个</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"key"</span> : &#123; <span class="variable">$nin</span>: [ 1, 2, 3 ] &#125; &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>属于，条件相当于key等于[ 1, 2, 3 ]中任何一个</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"key"</span> : &#123; <span class="variable">$in</span>: [ 1, 2, 3 ] &#125; &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>$size 数量、尺寸，条件相当于key的值的数量是1（key必须是数组，一个值的情况不能算是数量为1的数组）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"key"</span> : &#123; <span class="variable">$size</span>: 1 &#125; &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>$exists 字段存在，true返回存在字段key的数据，false返回不存在字度key的数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"key"</span> : &#123; <span class="variable">$exists</span> : <span class="literal">true</span>|<span class="literal">false</span> &#125; &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>正则，类似like；“i”忽略大小写，“m”支持多行.如joe会匹配出来</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"name"</span>:/^j/,<span class="string">"name"</span>:/e$/ &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>$or或 （注意：MongoDB 1.5.3后版本可用），符合条件a=1的或者符合条件b=2的数据都会查询出来</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="variable">$or</span> : [&#123;a : 1&#125;, &#123;b : 2&#125; ] &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>符合条件key=value ，同时符合其他两个条件中任意一个的数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"key"</span>: value , <span class="variable">$or</span> : [&#123; a : 1 &#125; , &#123; b : 2 &#125;] &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>内嵌对象中的值匹配，注意：”key.subkey”必须加引号</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"key.subkey"</span> :value &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这是一个与其他查询条件组合使用的操作符，不会单独使用。上述查询条件得到的结果集加上$not之后就能获得相反的集合。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="string">"key"</span>: &#123; <span class="variable">$not</span> : /^val.val$/i &#125; &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>$where中的value,可以写成类似js的形式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection.find(&#123; <span class="variable">$where</span>:<span class="function"><span class="title">function</span></span>()&#123;<span class="built_in">return</span> this.name==<span class="string">"joe"</span>&#125; &#125;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
+      
+    </div>
+    <div class="article-footer">
+      <!-- <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://reysun.github.io/2017/02/24/mongodb常用增删改查语句/" title="MongoDB常用增删改查语句" target="_blank" rel="external">https://reysun.github.io/2017/02/24/mongodb常用增删改查语句/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote> -->
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/ReySun" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpeg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/ReySun" target="_blank"><span class="text-dark">ReySun</span><small class="ml-1x">Web Developer</small></a></h3>
+        <div>前端工程师，轻微代码洁癖，于妥协与坚持中追求完美。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+<!-- <div style="height: 30px;"></div> -->
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2017/04/06/CSS3渐进增强解决方案/" title="CSS3渐进增强解决方案"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2017/02/24/mongodb安装与环境配置/" title="MongoDB安装及环境配置"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <!-- <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ReySun" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer> -->
+  <!-- <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script> -->
+<script>
+window.jQuery || document.write('<script src="/js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+<script src="https://www.wenjunjiang.win/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  // id默认为当前页面url，如果url后带参数或锚点，gitment要重新初始化
+  // https://github.com/imsun/gitment/issues/55
+  // 解决方案：id:window.location.pathname,或者将id设置为当前页面标题
+  id: 'MongoDB常用增删改查语句', 
+  owner: 'reysun', // 可以是你的GitHub用户名，也可以是github id
+  repo: 'reysun.github.io',
+  oauth: {
+    client_id: 'efde6804ef3afc9d73b9',
+    client_secret: '778bd99bf9b418f41e7aafabc01c0d4ca9f015ea',
+  }
+})
+gitment.render('comments')
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
