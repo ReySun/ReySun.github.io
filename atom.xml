@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://reysun.github.io/"/>
-  <updated>2019-10-13T10:07:58.896Z</updated>
+  <updated>2019-10-28T10:57:04.464Z</updated>
   <id>https://reysun.github.io/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>CSS水平垂直居中</title>
+    <link href="https://reysun.github.io/2019/10/27/css/CSS%20%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD/"/>
+    <id>https://reysun.github.io/2019/10/27/css/CSS 水平垂直居中/</id>
+    <published>2019-10-27T10:03:10.000Z</published>
+    <updated>2019-10-28T10:57:04.464Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="水平居中"><a href="#水平居中" class="headerlink" title="水平居中"></a>水平居中</h2><h3 id="inline-inline"><a href="#inline-inline" class="headerlink" title="inline/inline-*"></a>inline/inline-*</h3><ul><li>父级是块级元素，<code>text-align:center</code>;</li></ul><h3 id="块级元素"><a href="#块级元素" class="headerlink" title="块级元素"></a>块级元素</h3><ul><li><p>方式一：子元素<code>width</code>+<code>margin-left/right:auto</code>;</p></li><li><p>方式二：inline-block，父级<code>text-align:center</code>，子元素<code>display:inline-block</code>;</p></li><li><p>方式三：flexbox，父级<code>display:flex</code>+<code>justify-content:center</code>;</p></li></ul><h2 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h2><h3 id="inline-inline-1"><a href="#inline-inline-1" class="headerlink" title="inline/inline-*"></a>inline/inline-*</h3><ul><li><p>单行</p><ul><li>方式一：<code>padding-top</code>和<code>padding-bottom</code>相同；</li><li>方式二：<code>height</code>和<code>line-height</code>相同，<code>white-space: nowrap</code>;</li></ul></li><li><p>多行</p><ul><li>方式一：利用<code>table</code>+<code>td</code>，<code>td</code>设置<code>vertical-align: middle</code>;</li><li>方式二：父级<code>display: table</code>，子元素<code>display: table-cell</code>+<code>vertical-align: middle</code>;</li><li>方式三：flexbox，<code>display: flex</code>+<code>justify-content: center</code>+ <code>flex-direction: column</code>;</li><li>方式四：flexbox，<code>display: flex</code>+<code>align-items: center</code>;</li></ul></li></ul><h3 id="块级元素-1"><a href="#块级元素-1" class="headerlink" title="块级元素"></a>块级元素</h3><ul><li>已知<code>height</code><ol><li>父级<code>position: relative</code>;</li><li>子元素<code>position: absolute</code>+<code>top: 50%</code>+<code>margin-top:-1/2*height</code>;</li></ol></li><li>未知<code>height</code><ol><li>父级<code>position: relative</code>;</li><li>子元素<code>position: absolute</code>+<code>top: 50%</code>+<code>transform: translateY(-50%)</code>;</li></ol></li><li>同<code>垂直居中</code>中<code>inline/inline-*</code>的多行;</li><li>使用<code>grid</code>;</li></ul><blockquote><p>参考链接：<a href="https://css-tricks.com/centering-css-complete-guide/" target="_blank" rel="noopener">https://css-tricks.com/centering-css-complete-guide/</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;水平居中&quot;&gt;&lt;a href=&quot;#水平居中&quot; class=&quot;headerlink&quot; title=&quot;水平居中&quot;&gt;&lt;/a&gt;水平居中&lt;/h2&gt;&lt;h3 id=&quot;inline-inline&quot;&gt;&lt;a href=&quot;#inline-inline&quot; class=&quot;headerlink
+      
+    
+    </summary>
+    
+    
+      <category term="CSS" scheme="https://reysun.github.io/categories/CSS/"/>
+    
+    
+      <category term="css" scheme="https://reysun.github.io/tags/css/"/>
+    
+  </entry>
+  
+  <entry>
     <title>dynamic-import antd after create-react-app run npm run eject</title>
     <link href="https://reysun.github.io/2019/10/12/react/dynamic-import%20antd%20after%20create-react-app%20run%20npm%20run%20eject/"/>
     <id>https://reysun.github.io/2019/10/12/react/dynamic-import antd after create-react-app run npm run eject/</id>
     <published>2019-10-12T09:47:19.000Z</published>
-    <updated>2019-10-13T10:07:58.896Z</updated>
+    <updated>2019-10-28T10:46:48.374Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>探讨的问题<br><a href="https://ant.design/docs/react/use-with-create-react-app-cn#eject" target="_blank" rel="noopener">https://ant.design/docs/react/use-with-create-react-app-cn#eject</a><br>你也可以使用 create-react-app 提供的 yarn run eject 命令将所有内建的配置暴露出来。</p></blockquote><h4 id="eject之后未按需加载组件样式"><a href="#eject之后未按需加载组件样式" class="headerlink" title="eject之后未按需加载组件样式"></a>eject之后未按需加载组件样式</h4><p>其实主要就是css的全局引入导致的，并没有按需加载组件样式</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Button <span class="keyword">from</span> <span class="string">'antd/es/button'</span>;</span><br></pre></td></tr></table></figure><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">import</span> <span class="string">'~antd/dist/antd.css'</span>;</span><br></pre></td></tr></table></figure><p>仅引入<code>&lt;Button /&gt;</code>组件，eject之后的大小截图<br><img src="/images/articles/eject-not-dynamic-import.jpg" alt="eject-not-dynamic-import.jpg"><br>多余的css，如select组件等<br><img src="/images/articles/no-need-css.jpg" alt="no-need-css.jpg"></p><h4 id="利用babel-plugin-import按需加载组件样式"><a href="#利用babel-plugin-import按需加载组件样式" class="headerlink" title="利用babel-plugin-import按需加载组件样式"></a>利用<code>babel-plugin-import</code>按需加载组件样式</h4><p>安装babel插件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i babel-plugin-import --save-dev</span><br></pre></td></tr></table></figure><p>修改<code>config/webpack.config.js</code>，找到文件中<code>babel-loader</code>配置的地方，将插件加入进去</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">loader: require.resolve('babel-loader'),</span><br><span class="line">    ...</span><br><span class="line">    options: &#123;</span><br><span class="line">        ...</span><br><span class="line">        plugins: [</span><br><span class="line">            [<span class="string">"import"</span>, &#123; </span><br><span class="line">                <span class="attr">"libraryName"</span>: <span class="string">"antd"</span>, </span><br><span class="line">                <span class="attr">"libraryDirectory"</span>: <span class="string">"es"</span>, </span><br><span class="line">                <span class="attr">"style"</span>: <span class="string">"css"</span> </span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">        ...</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">...</span><br></pre></td></tr></table></figure><p>只引Button组件，不引css</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">'antd'</span>;</span><br></pre></td></tr></table></figure><p>仅引入<code>&lt;Button /&gt;</code>组件，eject之后的大小截图，与<code>react-app-rewired</code>的方式同等大小<br><img src="/images/articles/eject-dynamic-import.jpg" alt="eject-dynamic-import.jpg"></p>]]></content>
     
