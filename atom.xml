@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://reysun.github.io/"/>
-  <updated>2019-10-28T10:57:04.464Z</updated>
+  <updated>2019-10-31T05:02:50.024Z</updated>
   <id>https://reysun.github.io/</id>
   
   <author>
@@ -15,6 +15,62 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>仿京东移动端首页</title>
+    <link href="https://reysun.github.io/2019/10/31/mobile/mobile-jd/"/>
+    <id>https://reysun.github.io/2019/10/31/mobile/mobile-jd/</id>
+    <published>2019-10-31T04:51:10.000Z</published>
+    <updated>2019-10-31T05:02:50.024Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><blockquote><p><a href="https://github.com/ReySun/mobile" target="_blank" rel="noopener">github地址</a> <a href="https://reysun.github.io/mobile/">预览地址</a></p></blockquote><h4 id="项目初衷"><a href="#项目初衷" class="headerlink" title="项目初衷"></a>项目初衷</h4><p>展示移动端作品面试用，对京东商城并无恶意「我经常上京东😂」。</p><h4 id="亮点"><a href="#亮点" class="headerlink" title="亮点"></a>亮点</h4><ul><li>手动封装类似jq对选择器，可以进行简单对链式操作，未兼容ie，待优化迭代</li><li>采用<code>webpack</code>+<code>typescript</code>+<code>less</code>搭建原生开发环境</li><li>展示京东移动端首页，并做了简单的交互操作</li><li>布局采用的技术：<code>rem</code>+<code>float</code>+<code>flex</code></li></ul><h4 id="关于项目配置"><a href="#关于项目配置" class="headerlink" title="关于项目配置"></a>关于项目配置</h4><ul><li>postcss+autoprefixer自动添加浏览器兼容性css前缀</li><li>可以ts/js混用</li><li>可以在html中直接引入图片</li><li>编译压缩html/css/js</li></ul><h4 id="特殊说明"><a href="#特殊说明" class="headerlink" title="特殊说明"></a>特殊说明</h4><ul><li>实际项目中可能还会配置更多，比如字体，跨域，service worker，webpack缓存，webpack多页面开发配置等</li><li>团队合作的话还需要配置.editorconfig等</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/ReySun/mobile&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;github地址&lt;/a&gt; &lt;a href=&quot;https://r
+      
+    
+    </summary>
+    
+    
+      <category term="CSS" scheme="https://reysun.github.io/categories/CSS/"/>
+    
+    
+      <category term="移动端" scheme="https://reysun.github.io/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>移动端css基础</title>
+    <link href="https://reysun.github.io/2019/10/29/mobile/mobile-css/"/>
+    <id>https://reysun.github.io/2019/10/29/mobile/mobile-css/</id>
+    <published>2019-10-29T13:45:01.000Z</published>
+    <updated>2019-10-31T04:55:03.242Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><h2 id="移动端基础"><a href="#移动端基础" class="headerlink" title="移动端基础"></a>移动端基础</h2><h3 id="移动端调试方法"><a href="#移动端调试方法" class="headerlink" title="移动端调试方法"></a>移动端调试方法</h3><ul><li><code>chrome</code> 控制台 <code>toggle device toolbar</code>切换手机模拟器;</li><li>本机和手机连入同一局域网，直接访问开发环境<code>ipv4:port</code>;</li></ul><h3 id="视口viewport"><a href="#视口viewport" class="headerlink" title="视口viewport"></a>视口<code>viewport</code></h3><h4 id="布局视口layout-viewport"><a href="#布局视口layout-viewport" class="headerlink" title="布局视口layout viewport"></a>布局视口<code>layout viewport</code></h4><ul><li><p>移动设备默认使用布局视口，会尽可能的缩小网站让用户看到更多的网站内容;</p></li><li><p>这样PC页面也能在手机上查看，只是需要手动缩放来看；</p></li></ul><h4 id="视觉视口visual-viewport"><a href="#视觉视口visual-viewport" class="headerlink" title="视觉视口visual viewport"></a>视觉视口<code>visual viewport</code></h4><ul><li>当前手机屏幕能看到的网站区域;</li><li>不管用户如何缩放，都不会影响到布局视口的宽度;</li></ul><h4 id="理想视口ideal-viewport"><a href="#理想视口ideal-viewport" class="headerlink" title="理想视口ideal viewport"></a>理想视口<code>ideal viewport</code></h4><ul><li>移动端最理想的浏览和阅读宽度;</li><li>手动在html里面添加meta视口标签;</li><li>meta视口标签，就是让布局视口的宽度等于理想视口;</li></ul><h4 id="meta视口标签"><a href="#meta视口标签" class="headerlink" title="meta视口标签"></a>meta视口标签</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"</span>&gt;</span></span><br></pre></td></tr></table></figure><table><thead><tr><th>属性</th><th align="left">说明</th></tr></thead><tbody><tr><td>width</td><td align="left">设置viewport 的宽度，默认视口宽度，可以设置device-width等</td></tr><tr><td>height</td><td align="left">设置viewport 的高度</td></tr><tr><td>initial-scale</td><td align="left">初始缩放值，大于1的数字</td></tr><tr><td>minimum-scale</td><td align="left">最小缩放值，大于0的数字</td></tr><tr><td>maximum-scale</td><td align="left">最大缩放值，大于0的数字</td></tr><tr><td>user-scalable</td><td align="left">是否允许用户进行缩放，值为”no”或”yes”, no 代表不允许，yes代表允许（1或0）</td></tr></tbody></table>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;移动端基础&quot;&gt;&lt;a href=&quot;#移动端基础&quot; class=&quot;headerlink&quot; title=&quot;移动端基础&quot;&gt;&lt;/a&gt;移动端基础&lt;/h2&gt;&lt;h3 id=&quot;移动端调试方法&quot;&gt;&lt;a href=&quot;#移动端调试方法&quot; class=&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="CSS" scheme="https://reysun.github.io/categories/CSS/"/>
+    
+    
+      <category term="移动端" scheme="https://reysun.github.io/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>CSS水平垂直居中</title>
@@ -47,7 +103,7 @@
     <link href="https://reysun.github.io/2019/10/12/react/dynamic-import%20antd%20after%20create-react-app%20run%20npm%20run%20eject/"/>
     <id>https://reysun.github.io/2019/10/12/react/dynamic-import antd after create-react-app run npm run eject/</id>
     <published>2019-10-12T09:47:19.000Z</published>
-    <updated>2019-10-28T10:46:48.374Z</updated>
+    <updated>2019-10-31T04:49:41.109Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>探讨的问题<br><a href="https://ant.design/docs/react/use-with-create-react-app-cn#eject" target="_blank" rel="noopener">https://ant.design/docs/react/use-with-create-react-app-cn#eject</a><br>你也可以使用 create-react-app 提供的 yarn run eject 命令将所有内建的配置暴露出来。</p></blockquote><h4 id="eject之后未按需加载组件样式"><a href="#eject之后未按需加载组件样式" class="headerlink" title="eject之后未按需加载组件样式"></a>eject之后未按需加载组件样式</h4><p>其实主要就是css的全局引入导致的，并没有按需加载组件样式</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Button <span class="keyword">from</span> <span class="string">'antd/es/button'</span>;</span><br></pre></td></tr></table></figure><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">import</span> <span class="string">'~antd/dist/antd.css'</span>;</span><br></pre></td></tr></table></figure><p>仅引入<code>&lt;Button /&gt;</code>组件，eject之后的大小截图<br><img src="/images/articles/eject-not-dynamic-import.jpg" alt="eject-not-dynamic-import.jpg"><br>多余的css，如select组件等<br><img src="/images/articles/no-need-css.jpg" alt="no-need-css.jpg"></p><h4 id="利用babel-plugin-import按需加载组件样式"><a href="#利用babel-plugin-import按需加载组件样式" class="headerlink" title="利用babel-plugin-import按需加载组件样式"></a>利用<code>babel-plugin-import</code>按需加载组件样式</h4><p>安装babel插件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i babel-plugin-import --save-dev</span><br></pre></td></tr></table></figure><p>修改<code>config/webpack.config.js</code>，找到文件中<code>babel-loader</code>配置的地方，将插件加入进去</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">loader: require.resolve('babel-loader'),</span><br><span class="line">    ...</span><br><span class="line">    options: &#123;</span><br><span class="line">        ...</span><br><span class="line">        plugins: [</span><br><span class="line">            [<span class="string">"import"</span>, &#123; </span><br><span class="line">                <span class="attr">"libraryName"</span>: <span class="string">"antd"</span>, </span><br><span class="line">                <span class="attr">"libraryDirectory"</span>: <span class="string">"es"</span>, </span><br><span class="line">                <span class="attr">"style"</span>: <span class="string">"css"</span> </span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">        ...</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">...</span><br></pre></td></tr></table></figure><p>只引Button组件，不引css</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">'antd'</span>;</span><br></pre></td></tr></table></figure><p>仅引入<code>&lt;Button /&gt;</code>组件，eject之后的大小截图，与<code>react-app-rewired</code>的方式同等大小<br><img src="/images/articles/eject-dynamic-import.jpg" alt="eject-dynamic-import.jpg"></p>]]></content>
     

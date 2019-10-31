@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://reysun.github.io/2019/10/27/css/CSS%20%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD/</loc>
-    <lastmod>2019-10-28</lastmod>
+    <loc>https://reysun.github.io/2019/10/31/mobile/mobile-jd/</loc>
+    <lastmod>2019-10-31</lastmod>
+  </url>  <url>
+    <loc>https://reysun.github.io/2019/10/29/mobile/mobile-css/</loc>
+    <lastmod>2019-10-31</lastmod>
   </url>  <url>
     <loc>https://reysun.github.io/2019/10/12/react/dynamic-import%20antd%20after%20create-react-app%20run%20npm%20run%20eject/</loc>
+    <lastmod>2019-10-31</lastmod>
+  </url>  <url>
+    <loc>https://reysun.github.io/2019/10/27/css/CSS%20%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD/</loc>
     <lastmod>2019-10-28</lastmod>
   </url>  <url>
     <loc>https://reysun.github.io/2018/05/17/css/http/</loc>
